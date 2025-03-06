@@ -84,7 +84,7 @@ def main():
         batch_size=args.batch_size,
         shuffle=True,
         num_workers=args.workers,
-        persistent_workers=True,
+        persistent_workers=(args.workers!=0),
         pin_memory=False,
         drop_last=True
     )
