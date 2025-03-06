@@ -4,15 +4,20 @@ from exceptions.exceptions import InvalidDatasetSelection
 
 def simclr_pipeline_transform(size, s=1):
     """Return a set of data augmentation transformations as described in the SimCLR paper."""
-    color_jitter = transforms.ColorJitter(0.8 * s, 0.8 * s, 0.8 * s, 0.2 * s)
     data_transforms = transforms.Compose([
-        transforms.RandomResizedCrop(size=size),
         transforms.RandomHorizontalFlip(),
-        transforms.RandomApply([color_jitter], p=0.8),
-        transforms.RandomGrayscale(p=0.2),
-        transforms.GaussianBlur(kernel_size=int(0.1 * size), sigma=(0.1, 2.0)),
-        transforms.ToTensor()
-    ])
+          transforms.RandomResizedCrop(size=size),
+          transforms.RandomApply([
+              transforms.ColorJitter(brightness=0.5,
+                                     contrast=0.5,
+                                     saturation=0.5,
+                                     hue=0.1)
+          ], p=0.8),
+          transforms.RandomGrayscale(p=0.2),
+          transforms.GaussianBlur(kernel_size=0.1 * size),
+          transforms.ToTensor(),
+          transforms.Normalize((0.5,), (0.5,))
+        ])
     return data_transforms
 
 class ContrastiveLearningDataset:

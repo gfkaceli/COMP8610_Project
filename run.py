@@ -25,8 +25,8 @@ parser.add_argument('-a', '--arch', metavar='ARCH', default='resnet50',
                          ' | '.join(model_names) +
                          ' (default: resnet50)')
 # Updated default number of workers to match help text
-parser.add_argument('-j', '--workers', default=8, type=int, metavar='N',
-                    help='number of data loading workers (default: 8)')
+parser.add_argument('-j', '--workers', default=18, type=int, metavar='N',
+                    help='number of data loading workers (default: 18)')
 parser.add_argument('--epochs', default=200, type=int, metavar='N',
                     help='number of total epochs to run')
 parser.add_argument('-b', '--batch-size', default=256, type=int,
@@ -93,7 +93,6 @@ def main():
     model = ResNetSimCLR(base_model=args.arch, out_dim=args.out_dim)
     model.to(args.device)
     print(args.device.type)
-
     # Set up optimizer and learning rate scheduler
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
