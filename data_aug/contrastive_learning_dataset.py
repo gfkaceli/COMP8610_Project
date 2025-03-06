@@ -47,4 +47,4 @@ def get_stl10_dataset(root_folder, n_views):
         ContrastiveLearningDataset.get_simclr_pipeline_transform(96),
         n_views
     )
-    return datasets.STL10(root_folder, split='unlabeled', transform=transform, download=False)
+    return datasets.STL10(root_folder, split='unlabeled', transform=transform, download=True)
