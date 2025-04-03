@@ -135,7 +135,7 @@ def main():
                                   max_epochs=args.max_epochs)
 
     # Train the logistic regression classifier using PyTorch Lightning
-    trainer = pl.Trainer(max_epochs=args.max_epochs, accelerator='auto')
+    trainer = pl.Trainer(max_epochs=args.max_epochs, accelerator="auto")
     trainer.fit(lr_model, train_loader_lr, val_dataloaders=test_loader_lr)
     trainer.test(lr_model, test_loader_lr)
 
