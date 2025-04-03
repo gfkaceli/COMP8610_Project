@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+import numpy as np
 from torch.utils.data import DataLoader, TensorDataset
 from torchvision import datasets, transforms
 from tqdm import tqdm
@@ -134,7 +135,7 @@ def main():
                                   max_epochs=args.max_epochs)
 
     # Train the logistic regression classifier using PyTorch Lightning
-    trainer = pl.Trainer(max_epochs=args.max_epochs, gpus=1 if device.type == 'cuda' else 0)
+    trainer = pl.Trainer(max_epochs=args.max_epochs, accelerator='auto')
     trainer.fit(lr_model, train_loader_lr, val_dataloaders=test_loader_lr)
     trainer.test(lr_model, test_loader_lr)
 
