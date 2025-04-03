@@ -5,4 +5,4 @@ torchvision==0.20.1
 torchmetrics==1.6.1
 tqdm==4.66.5
 tensorboard==2.19.0
-pytorch-lightning==1.2.10
+pytorch-lightning==2.5.0.post0
