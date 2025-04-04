@@ -33,9 +33,14 @@ class LogisticRegression(pl.LightningModule):
         feats, labels = batch
         preds = self.model(feats)
         loss = F.cross_entropy(preds, labels)
-        acc = (preds.argmax(dim=-1) == labels).float().mean()
+        # Compute top-1 accuracy
+        top1_acc = (preds.argmax(dim=-1) == labels).float().mean()
+        # Compute top-5 accuracy: check if true label is in the top 5 predictions.
+        _, top5_pred = preds.topk(5, dim=-1)
+        top5_acc = top5_pred.eq(labels.view(-1, 1)).sum(dim=1).gt(0).float().mean()
         self.log(mode + '_loss', loss, prog_bar=True)
-        self.log(mode + '_acc', acc, prog_bar=True)
+        self.log(mode + '_top1_acc', top1_acc, prog_bar=True)
+        self.log(mode + '_top5_acc', top5_acc, prog_bar=True)
         return loss
 
     def training_step(self, batch, batch_idx):
